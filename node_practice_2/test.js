@@ -2,9 +2,9 @@ const express = require("express");
 const joi = require("joi");
 
 const app = express();
-app.use(express.json());
-app.set("view engine", "pug");
-app.set("views", "./views");
+//app.use(express.json());
+// app.set("view engine", "pug");
+// app.set("views", "./views");
 
 console.log("Node current environment :", process.env.NODE_ENV);
 console.log("The environment variable that is  set is :", app.get("env"));

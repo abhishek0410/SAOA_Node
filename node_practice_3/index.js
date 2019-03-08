@@ -1,6 +1,7 @@
 const express = require("express");
+const joi = require("joi");
 app = express();
-
+app.use(express.json());
 const movies = [
   { name: "dil_to_pagal_ha", release_year: 1995 },
   { name: "jaane_tu_ya_jaane_na", release_year: 1996 },
@@ -19,12 +20,35 @@ app.get("/movies", (req, res) => {
 });
 
 app.get("/movies/:name?", (req, res) => {
-  console.log("route parameter is ", req.params.name);
-  const movie_name = movies.find(movie => {
-    //console.log("the movie is ", movie.name === req.params.name);
-    movie.name === req.params.name;
-  });
-  console.log(movie_name);
+  const movie_name = movies.find(movie => movie.name === req.params.name);
+  if (!movie_name) {
+    console.log("The if block is executed ", movie_name);
+  }
+});
+
+//Posting the movies and then displaying what has been posted
+//on the local web server
+
+//POST request :
+app.post("/movies", (req, res) => {
+  console.log("Inside the POST -/movies endpoint");
+  const schema = {
+    name: joi
+      .string()
+      .min(3)
+      .required(),
+    release_year: joi
+      .string()
+      .min(3)
+      .required()
+  };
+  const new_movie_added = {
+    name: req.body.name,
+    release_year: req.body.release_year
+  };
+
+  movies.push(new_movie_added);
+  res.send(movies);
 });
 
 app.listen(3003, () => {
