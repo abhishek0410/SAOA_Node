@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 mongoose
-  .connect("mongodb://localhost/playground2")
+  .connect("mongodb://localhost/playground3")
   .then(() => {
     console.log("Connected to MongoDB FINALLY");
   })
@@ -30,18 +30,16 @@ var i = 1;
 data.map(async data => {
   const course = new Course();
   course.name = data.name;
-  course.author = data.authorl;
+  course.author = data.author;
   course.release_year = data.release_year;
   const result = await course.save();
-  console.log("Saving result ", i, " in the database");
+  console.log("Saving result ", i, " in the database ");
   i = i + 1;
 });
 
-// async function createCourse() {
-//   const course = new Course();
-//   course.name = "Hello";
-//   (course.author = "Dekha hai"),
-//     (course.tags = ["Twinkle - twinkle", "Little Star"]);
-//   const result = await course.save();
-//   console.log(" In the createCourse Function", result);
-// }
+async function getCourses() {
+  const courses = await Course.find({ author: "K5" });
+  console.log(courses);
+}
+
+getCourses();
